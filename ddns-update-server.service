@@ -1,0 +1,18 @@
+[Unit]
+Description=DDNS update server
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=/usr/local/bin/ddns-update-server --addr=:8091 \
+                                            --credentials_file_path=/var/local/clouddns.key.json \
+                                            --gcp_project=ogorkisnet \
+                                            --managed_zone=default-zone \
+                                            --rrset_name=internal.ogorkis.net. \
+                                            --rrset_type=A
+
+[Install]
+WantedBy=multi-user.target
